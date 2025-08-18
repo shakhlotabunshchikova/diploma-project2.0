@@ -1,0 +1,82 @@
+.page {
+  width: 100%;
+  padding: 40px 60px;
+}
+
+.cartWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.cartTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: rgba(9, 9, 55, 1);
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  color: rgba(204, 61, 34, 1); 
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.cartGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 24px;
+}
+
+.bookCard {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0px 2px 6px rgba(9, 9, 55, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coverLink {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.cover {
+  max-width: 140px;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.info {
+  text-align: center;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(9, 9, 55, 1);
+  margin-bottom: 8px;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.price {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(103, 61, 230, 1); 
+}
