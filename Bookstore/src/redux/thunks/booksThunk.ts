@@ -1,11 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { BookListItem } from "../../types/TBook";
+import { type BookDetails, type BookListItem } from "../../types/TBook";
 import type { SearchResponse } from "../../types/TApi";
 import { api } from "../../axios/axios";
 import type { NewResponse } from "../../types/TApi";
 
-// New releases: GET /new
-// Return array of books
 export const fetchNew = createAsyncThunk<BookListItem[]>(
     "books/fetchNew",
     async () => {
@@ -28,5 +26,13 @@ export const searchBooks = createAsyncThunk<
     query,
  };
  });
+
+ export const fetchBook = createAsyncThunk<BookDetails, string>(
+    "books/fetchBook",
+    async (isbn13) => {
+        const { data } = await api.get(`/books/${isbn13}`);
+        return data as BookDetails;
+    }
+ );
 
 

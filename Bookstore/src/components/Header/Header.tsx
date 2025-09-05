@@ -4,7 +4,7 @@ import type { THeader } from "../../types/THeader";
 import styles from "./Header.module.scss";
 import { HeartIcon } from "../../assets/icons/HeartIcon";
 
-import { Logo } from "../../assets/icons/logo";
+import { Logo } from "../../assets/icons/Logo";
 import { CartButton } from "../CartButton/CartButton";
 
 export const Header = ({ placeholder, onSearch }: THeader) => {
@@ -48,7 +48,7 @@ export const Header = ({ placeholder, onSearch }: THeader) => {
       <Link to="/favorites" className={styles.icon}>
         <HeartIcon />
       </Link>
-     <CartButton/>
+       <CartButton/>
      </div>
      </div>
     </header>

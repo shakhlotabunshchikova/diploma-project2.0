@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import styles from "./CartPage.module.scss";  // оставляем один css-module
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { clearCart } from "../redux/slices/cartSlice";
+import styles from "./CartPage.module.scss"; 
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { clearCart } from "../../redux/slices/cartSlice";
 
 export const CartPage = () => {
   const dispatch = useAppDispatch();
   const items = useAppSelector((s) => s.cart.items);
 
   return (
-    <div className={styles.page}>
+    <div className={styles.container}>
       <div className={styles.cartWrap}>
         <h2 className={styles.cartTitle}>Cart</h2>
         <button

@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo } from "react";
-import { BookCard } from "../components/BookCard/BookCard";
-import { Header } from "../components/Header/Header";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { BookCard } from "../../components/BookCard/BookCard";
+import { Header } from "../../components/Header/Header";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import styles from "./Home.module.scss";
-import { fetchNew, searchBooks } from "../redux/thunks/booksThunk";
+import { fetchNew, searchBooks } from "../../redux/thunks/booksThunk";
 
 
 const STEP = 8;
@@ -60,7 +60,7 @@ export const Home = () => {
   };
 
   return (
-    <div className={styles.mainContainer}>
+    <div className={styles.container}>
       <Header placeholder="Search" onSearch={handleSearch} />
 
       <div className={styles.homeWrap}>

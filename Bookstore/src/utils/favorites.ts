@@ -8,12 +8,10 @@ export function getFavorites(): string[] {
   }
 }
 
-// check if the book is there
 export function isFavorite(isbn13: string): boolean {
   return getFavorites().includes(isbn13);
 }
 
-// Add/Delete the book from favorites
 export function toggleFavorite(isbn13: string): string[] {
   const list = new Set(getFavorites());      
   if (list.has(isbn13)) list.delete(isbn13);

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./CartButton.module.scss";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCartCount } from "../../redux/slices/cartSlice";
-import { Cart } from "../../assets/icons/cart";
+import { Cart } from "../../assets/icons/Cart";
 
 export const CartButton = () => {
   const count = useAppSelector(selectCartCount);

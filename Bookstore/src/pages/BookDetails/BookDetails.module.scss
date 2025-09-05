@@ -1,0 +1,137 @@
+.page,
+.detialsPage {
+  background: rgba(244, 244, 255, 1);
+  min-height: 100vh;
+}
+
+.container,
+.detailsContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 60px 48px;
+}
+
+.topRow {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #1f1f36;
+  font-weight: 600;
+}
+.backArrow {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.bookCover {
+  background: #fff;
+  border: 1px solid rgba(9, 9, 55, 0.1);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 8px 14px rgba(9, 9, 55, 0.06);
+}
+
+.cover {
+  width: 100%;
+  max-width: 320px;
+  max-height: 460px;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+
+.bookTitle {
+  font-size: 32px;
+  font-weight: 800;
+  color: #101010;
+}
+
+.author {
+  font-size: 18px;
+  color: #4b4b63;
+  margin-top: -4px;
+}
+
+.subhead {
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #101010;
+}
+
+.summary {
+  color: #2e2e4a;
+  line-height: 1.7;
+}
+
+.noDesc { color: #8a8aa9; }
+
+.bottomBar {
+  margin-top: 36px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  height: 44px;
+  padding: 0 18px 0 12px;
+  border: none;
+  border-radius: 10px;
+  background: #e26a2c;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(9, 9, 55, 0.08);
+  transition: opacity .15s ease, transform .06s ease;
+}
+.buyBtn:hover  { opacity: .96; }
+.buyBtn:active { transform: translateY(1px); }
+
+.buyPrice {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2a2a44;
+  font-weight: 700;
+}
+.buyLabel { letter-spacing: .2px; }
+
+
+.loaderRow {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5b5b7a;
+}
+
+@media (max-width: 900px) {
+  .container,
+  .detailsContainer { padding: 24px 24px 40px; }
+  .content          { grid-template-columns: 1fr; }
+  .bottomBar        { justify-content: center; }
+}
