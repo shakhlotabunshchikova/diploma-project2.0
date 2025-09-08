@@ -3,15 +3,12 @@ import type { ButtonProps } from "../../types/TButton";
 
 export const Button = ({
   variant = "primary",
-  size = "md",
   className = "",
   children,
-  ...rest
+  ...props
 }: ButtonProps) => {
-  const cls = `${styles.btn} ${styles[variant]} ${styles[size]} ${className}`;
+  const root = [styles.btnRoot, styles[variant], className].filter(Boolean).join(" ");
   return (
-    <button className={cls} {...rest}>
-      {children}
-    </button>
+    <button type="button" className={root} {...props}/>
   );
 };

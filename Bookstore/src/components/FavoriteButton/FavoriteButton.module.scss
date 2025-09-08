@@ -1,18 +1,15 @@
 @use "../../styles/iconButton" as ib;
 
-.cartBtn {
+.favBtn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  
 }
-
-.icon {
-  width: 20px;
-  height: 20px;
-  color: rgba(9, 9, 55, 1); 
-}
+.icon { 
+    width: 20px; 
+    height: 20px; 
+    color: #0b0b34; }
 
 .badge {
   position: absolute; 
@@ -26,3 +23,4 @@
   padding: 2px 6px; 
   border-radius: 999px;
 }
+

@@ -1,0 +1,20 @@
+@mixin icon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+
+  &:hover { background: rgba(244, 244, 255, 1); }
+}
+
+@mixin icon {
+  width: 20px;
+  height: 20px;
+  color: rgba(9, 9, 55, 1);
+}

@@ -1,13 +1,12 @@
-.btn {
+.btnRoot {
   border-radius: 6px;
   cursor: pointer;
   font-family: inherit;
   transition: box-shadow 0.2s ease, transform 0.02s ease;
-
+  color: inherit;
   &:hover {
     box-shadow: 0px 4px 8px rgba(9, 9, 55, 0.08);
   }
-
   &:active {
     transform: translateY(1px);
   }
@@ -31,14 +30,3 @@
   color: #a00;
 }
 
-.sm {
-  height: 32px;
-  padding: 0 12px;
-  font-size: 14px;
-}
-
-.md {
-  height: 36px;
-  padding: 0 16px;
-  font-size: 15px;
-}

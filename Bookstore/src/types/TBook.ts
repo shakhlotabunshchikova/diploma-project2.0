@@ -1,6 +1,6 @@
 export interface BookListItem {
 title: string;
-subtitle: string;
+subtitle?: string;
 isbn13: string;
 price: string;
 image: string;
@@ -11,7 +11,7 @@ export interface BookDetails {
   error:string;
   title:string;
   subtitle: string;
-  author:string;
+  authors:string;
   publisher: string;
   language?:string;
   isbn10:string;

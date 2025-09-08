@@ -61,19 +61,34 @@ const booksSlice = createSlice({
         });
     
 
-        builder
-        .addCase(searchBooks.pending,(state)=> {
-            state.search.status= "loading";
+      builder
+        .addCase(searchBooks.pending, (state, action) => {
+            state.search.status = "loading";
             state.search.error = undefined;
+
+            if (action.meta?.arg?.page === 1 || !action.meta?.arg?.page) {
+                state.search.results = [];
+                state.search.total = 0;
+                state.search.page = 1;
+                state.search.query = action.meta.arg.query;
+            }
         })
-        .addCase(searchBooks.fulfilled, (state, action)=> {
-            state.search.status= "succeeded";
-            state.search.results = action.payload.books;
-            state.search.page = action.payload.page;
-            state.search.total = action.payload.total;
-            state.search.query = action.payload.query;
+        .addCase(searchBooks.fulfilled, (state, action) => {
+            const { books, page, total, query } = action.payload;
+
+            state.search.status = "succeeded";
+            state.search.page = page;
+            state.search.total = total;
+            state.search.query = query;
+
+            if (page > 1) {
+            state.search.results = [...state.search.results, ...books];
+            } else {
+                state.search.results = books;
+            }
         })
-        .addCase(searchBooks.rejected, (state, action)=>{
+
+       .addCase(searchBooks.rejected, (state, action) => {
             state.search.status = "failed";
             state.search.results = [];
             state.search.total = 0;

@@ -1,31 +1,18 @@
-import { useState, useEffect } from "react";
-import { Button } from "../Button/Button";
-import { isFavorite, toggleFavorite } from "../../utils/favorites";
-import { HeartIcon } from "../../assets/icons/HeartIcon"; 
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks";
+import { selectFavoritesCount } from "../../redux/slices/favoritesSlice";
+import { HeartIcon } from "../../assets/icons/HeartIcon";
+import styles from "./FavoriteButton.module.scss";
 
-type Props = { isbn13: string };
-
-export const FavoriteButton = ({ isbn13 }: Props) => {
-  const [fav, setFav] = useState(false);
-
-  useEffect(() => {
-    setFav(isFavorite(isbn13));
-  }, [isbn13]);
-
-  const handleClick = () => {
-    const updated = toggleFavorite(isbn13);
-    setFav(updated.includes(isbn13));
-  };
+export const FavoritesButton = ({ className }: { className?: string }) => {
+  const count = useAppSelector(selectFavoritesCount);
 
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={handleClick}
-      aria-pressed={fav}
-      title={fav ? "В избранном" : "Добавить в избранное"}
+    
+    <Link to="/favorites" className={`${styles.favBtn} ${className ?? ""}`}
     >
-      <HeartIcon filled={fav} size={18} />
-    </Button>
+      <HeartIcon className={styles.icon} filled={count > 0} />
+      {count > 0 && <span className={styles.badge}>{count}</span>}
+    </Link>
   );
 };

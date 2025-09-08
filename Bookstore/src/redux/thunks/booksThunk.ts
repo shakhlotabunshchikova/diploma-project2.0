@@ -6,18 +6,25 @@ import type { NewResponse } from "../../types/TApi";
 
 export const fetchNew = createAsyncThunk<BookListItem[]>(
     "books/fetchNew",
-    async () => {
-        const {data} = await api.get<NewResponse> ("/new");
-        return data.books;
+    async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get<NewResponse>("/new");
+      return data.books;
+    } catch (err: any) {
+      return rejectWithValue(err?.message ?? "Failed to fetch new releases");
     }
-)
-
+  }
+);
 export const searchBooks = createAsyncThunk<
 {books: BookListItem[]; page:number; total: number; query: string }, 
-{query: string; page?: number} 
- >("books/serachBoooks", async ({ query, page = 1}) => {
-    const {data} = await api.get<SearchResponse>(
-    `/search/${encodeURIComponent(query)}/${page}`
+{query: string; page?: number},
+ { rejectValue: string } 
+ >("books/searchBoooks", 
+    async ({ query, page = 1}, { rejectWithValue, signal }) => {
+     try {
+      const { data } = await api.get<SearchResponse>(
+        `/search/${encodeURIComponent(query)}/${page}`,
+        { signal } 
     );
      return {
     books: data.books,
@@ -25,14 +32,27 @@ export const searchBooks = createAsyncThunk<
     total:Number (data.total),
     query,
  };
- });
-
- export const fetchBook = createAsyncThunk<BookDetails, string>(
-    "books/fetchBook",
-    async (isbn13) => {
-        const { data } = await api.get(`/books/${isbn13}`);
-        return data as BookDetails;
+ } catch (err: any) {
+    if (err?.name === "CanceledError" || err?.code === "ERR_CANCELED") {
+        throw err;
+      }
+      return rejectWithValue(err?.message ?? "Search request failed");
     }
- );
+  }
+);
 
+ export const fetchBook = createAsyncThunk<BookDetails, string, { rejectValue: string }>(
+    "books/fetchBook",
+    async (isbn13, { rejectWithValue, signal }) => {
+        try {
+      const { data } = await api.get(`/books/${isbn13}`, { signal });
+      return data as BookDetails;
+    } catch (err: any) {
+      if (err?.name === "CanceledError" || err?.code === "ERR_CANCELED") {
+        throw err;
+      }
+      return rejectWithValue(err?.message ?? "Failed to fetch book");
+    }
+  }
+);
 

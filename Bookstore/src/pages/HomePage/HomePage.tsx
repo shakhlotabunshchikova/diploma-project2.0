@@ -1,10 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { BookCard } from "../../components/BookCard/BookCard";
-import { Header } from "../../components/Header/Header";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import styles from "./Home.module.scss";
 import { fetchNew, searchBooks } from "../../redux/thunks/booksThunk";
-
 
 const STEP = 8;
 
@@ -13,59 +11,43 @@ export const Home = () => {
   const newState = useAppSelector((s) => s.books.newReleases);
   const searchState = useAppSelector((s) => s.books.search);
 
-  
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
   const [visible, setVisible] = useState(STEP);
 
-  
   useEffect(() => {
-    if (!query && newState.status === "idle") {
+    if (!searchState.query && newState.status === "idle") {
       dispatch(fetchNew());
     }
-  }, [dispatch, query, newState.status]);
+  }, [dispatch, searchState.query, newState.status]);
 
-  
-  useEffect(() => {
-    if (query) {
-      dispatch(searchBooks({ query, page }));
-    }
-  }, [dispatch, query, page]);
+  const isSearching = Boolean(searchState.query);
 
-  
   const books = useMemo(
-    () => (query ? searchState.results : newState.items.slice(0, visible)),
-    [query, searchState.results, newState.items, visible]
+    () => (isSearching ? searchState.results : newState.items.slice(0, visible)),
+    [isSearching, searchState.results, newState.items, visible]
   );
 
-  
-  const handleSearch = (q: string) => {
-    const trimmed = q.trim();
-    setQuery(trimmed);
-    setPage(1);
-    setVisible(STEP);
-
-  };
-
-
-  const canLoadMoreNew = !query && visible < newState.items.length;
-  const canLoadMoreSearch = query && page * 10 < searchState.total;
+  const canLoadMoreNew = !isSearching && visible < newState.items.length;
+  const canLoadMoreSearch =
+    isSearching && searchState.page * 10 < searchState.total;
 
   const handleLoadMore = () => {
-    if (query) {
-      setPage((p) => p + 1); 
+    if (isSearching) {
+      dispatch(
+        searchBooks({ query: searchState.query, page: searchState.page + 1 })
+      );
     } else {
-      setVisible((v) => Math.min(v + STEP, newState.items.length)); 
+      setVisible((v) => Math.min(v + STEP, newState.items.length));
     }
   };
 
-  return (
-    <div className={styles.container}>
-      <Header placeholder="Search" onSearch={handleSearch} />
 
-      <div className={styles.homeWrap}>
+  return (
+      <div className="container">
+        <div className={styles.page}>
         <h2 className={styles.homeTitle}>
-          {query ? `Results for "${query}"` : "Best Seller"}
+          {isSearching
+            ? `Results for "${searchState.query}"`
+            : "Best Seller"}
         </h2>
 
         <div className={styles.bookGrid}>
@@ -78,11 +60,11 @@ export const Home = () => {
           <button
             className={styles.loadMore}
             onClick={handleLoadMore}
-          >
-            Load more
+          >Load more
           </button>
         )}
       </div>
-    </div>
+      </div>
+
   );
 };

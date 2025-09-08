@@ -1,43 +1,47 @@
 import styles from './BookCard.module.scss';
-import type { BookCardProps } from '../../types/TBookCard';
-import { useEffect, useState } from 'react';
-import { isFavorite, toggleFavorite } from '../../utils/favorites';
+import type { BookListItem } from '../../types/TBook';
 import { Link } from 'react-router-dom';
-import { HeartIcon } from '../../assets/icons/HeartIcon';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { addToCart } from '../../redux/slices/cartSlice';
 
-export const BookCard =({book, onAddToCart}: BookCardProps)=>{
-    const [fav, setFav]=useState(false);
 
-    useEffect(()=>{
-        setFav(isFavorite(book.isbn13));
-    }, [book.isbn13]);
+type Props = { book: BookListItem };
 
-    const handleToggleFav =()=>{
-        const updated = toggleFavorite(book.isbn13);
-        setFav(updated.includes(book.isbn13));
-    };
+
+export const BookCard =({book}: Props)=>{
+    const dispatch = useAppDispatch();
+    const qtyInCart = useAppSelector(
+    (s) => s.cart.items.find(i => i.book.isbn13 === book.isbn13)?.quantity ?? 0
+  );
+
+  const handleAdd = () => {
+    dispatch(addToCart(book));
+  };
     return (
         <div className={styles.cardWrap}>
             <Link to={`/book/${book.isbn13}`} className={styles.coverLink}>
-                <img className={styles.cover} src={book.image} alt={`${book.title}cover`}/>
+                <img 
+                className={styles.cover} 
+                src={book.image} 
+                alt={`${book.title} cover`}
+                />
             </Link>
             <div className={styles.bookInfo}>
-                <Link to={`/book/${book.isbn13}`} className={styles.bookTitle} title={book.title}>{book.title}</Link>
-                {/* {book.subtitle && <p className={styles.bookSubtitle}>{book.subtitle}</p>} */}
+                <Link 
+                to={`/book/${book.isbn13}`} 
+                className={styles.bookTitle}
+                title={book.title}>
+                {book.title}
+                </Link>
 
-            <div className={styles.moreInfo}>
+            <div className={styles.ctaRow}>
                 <span className={styles.bookPrice}>{book.price}</span>
-                <div className={styles.actions}>
-                    <button className={styles.btn} onClick={()=> onAddToCart?.(book)}>Buy Now</button>
-                    <button
-                    className={styles.favBtn}
-                    onClick={handleToggleFav}
-                    aria-pressed={fav}
-                    title={fav? "В избранном" : "Добавить в избранное"}>
-                        <HeartIcon
-                        className={`${styles.icon}${fav ? styles.iconFilled : styles.iconOutline}`} />
-                    </button>
-                </div>
+              <button
+                    className={`${styles.buyBtn} ${qtyInCart ? styles.added : ''}`}
+                    onClick={handleAdd}
+                >
+                    {qtyInCart ? `In cart (${qtyInCart})` : 'Add to cart'}
+                </button> 
             </div>
            </div>
         </div>

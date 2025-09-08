@@ -1,22 +1,21 @@
-const FavBooks = "favorites"; 
-export function getFavorites(): string[] {
+export const FAV_SHELF_KEY = "bookshop:favorites:v1";
+
+export function readFavIds(): string[] {
   try {
-    const raw = localStorage.getItem(FavBooks);   
-    return raw ? JSON.parse(raw) : [];      
+    const raw = localStorage.getItem(FAV_SHELF_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+
+    return Array.isArray(parsed) ? parsed : Array.isArray(parsed?.ids) ? parsed.ids : [];
   } catch {
-    return [];                            
+    return [];
   }
 }
 
-export function isFavorite(isbn13: string): boolean {
-  return getFavorites().includes(isbn13);
+export function writeFavIds(ids: string[]): void {
+  try {
+    localStorage.setItem(FAV_SHELF_KEY, JSON.stringify({ ids }));
+  } catch {
+  }
 }
 
-export function toggleFavorite(isbn13: string): string[] {
-  const list = new Set(getFavorites());      
-  if (list.has(isbn13)) list.delete(isbn13);
-  else list.add(isbn13);                     
-  const arr = Array.from(list);              
-  localStorage.setItem(FavBooks, JSON.stringify(arr)); 
-  return arr;                               
-}
